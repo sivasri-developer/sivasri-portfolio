@@ -2,21 +2,17 @@
 
 A modern, responsive developer portfolio built with **React 19**, **Vite**, **TypeScript**, and **Tailwind CSS**.
 
+🌐 **Live Demo:** [https://sivasri-portfolio.vercel.app/](https://sivasri-portfolio.vercel.app/)
+
 ---
 
 ## 🚀 Live Demo & Deployment
 
-### 1. Deploy on Vercel (Recommended)
-Vercel provides seamless zero-configuration hosting for Vite React applications with global CDN performance and automatic SSL.
+### 1. Live Web Application
+- **Vercel Deployment:** [sivasri-portfolio.vercel.app](https://sivasri-portfolio.vercel.app/)
 
-#### Option A: Quick Import via Vercel Dashboard (1-Click)
-1. Go to [Vercel New Project](https://vercel.com/new).
-2. Connect your **GitHub** account and select the **`sivasri-portfolio`** repository.
-3. Vercel will automatically detect **Vite**:
-   - **Framework Preset**: `Vite`
-   - **Build Command**: `npm run build`
-   - **Output Directory**: `dist`
-4. Click **Deploy**. Your portfolio will be live in ~30 seconds!
+### 2. Deploying Updates on Vercel
+Now that your repository is connected to Vercel, every time you push code changes to GitHub, Vercel will automatically build and re-deploy your website!
 
 ---
 
