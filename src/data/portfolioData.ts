@@ -13,7 +13,7 @@ export const PERSONAL_INFO = {
 I have hands-on experience building full-stack web applications like smileSteps (MERN stack child-friendly activity platform), Online Garment Shop Management System (Java/JSP & MySQL), and RS App Hub. Beyond software development, I am a District Gold Medalist in Taekwondo, state-level participant, and 2nd prize winner in inter-college Semantic Memory competitions.`,
   location: 'Tamil Nadu, India',
   availability: 'Available for Full-time Software Engineering Roles & Internships',
-  photoUrl: '/sivasri_photo.png',
+  photoUrl: '/sivasri_photo.png?v=2',
   photoFallback: 'https://github.com/sivasri-developer.png',
   github: 'https://github.com/sivasri-developer',
   linkedin: 'https://linkedin.com/in/sivasri-ravi-369000299',

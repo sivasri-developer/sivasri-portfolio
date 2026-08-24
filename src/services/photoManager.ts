@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 
-const STORAGE_KEY = 'sivasri_profile_photo_data';
+const STORAGE_KEY = 'sivasri_profile_photo_data_v2';
 const PHOTO_EVENT = 'sivasri-photo-updated';
 
 export function getStoredProfilePhoto(): string {
@@ -45,6 +45,7 @@ export async function saveProfilePhoto(dataUrlOrBlob: string): Promise<string> {
 export function resetProfilePhoto(): void {
   try {
     localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem('sivasri_profile_photo_data');
     const defaultUrl = PERSONAL_INFO.photoUrl || '/sivasri_photo.png';
     window.dispatchEvent(new CustomEvent(PHOTO_EVENT, { detail: defaultUrl }));
   } catch (e) {
