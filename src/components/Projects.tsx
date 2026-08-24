@@ -10,16 +10,19 @@ import {
   Layers,
   ChevronRight,
   Code2,
+  Briefcase,
+  ArrowRight,
 } from 'lucide-react';
 
 interface ProjectsProps {
   onSelectProject: (project: Project) => void;
+  onNavigate?: (page: string) => void;
 }
 
-export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
+export const Projects: React.FC<ProjectsProps> = ({ onSelectProject, onNavigate }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
 
-  const categories = ['All', 'Java', 'Web App', 'Full Stack'];
+  const categories = ['All', 'MERN', 'Java', 'Web App'];
 
   const filteredProjects = PROJECTS.filter((proj) => {
     if (selectedCategory === 'All') return true;
@@ -27,25 +30,42 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
   });
 
   return (
-    <section id="projects" className="py-20 relative bg-emerald-50/50 dark:bg-[#0b1612] z-10">
+    <section id="projects" className="py-12 sm:py-16 relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Header */}
+        {/* Page Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bright-highlight-badge text-xs uppercase tracking-wider mb-3">
             <FolderGit2 className="w-4 h-4 text-emerald-600 dark:text-emerald-300" />
-            <span>Project Showcase</span>
+            <span>Software Engineering Projects</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
-            Featured Web & Enterprise Applications
-          </h2>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
+            Featured Development Projects
+          </h1>
           <p className="mt-3 text-base sm:text-lg text-slate-700 dark:text-slate-200 font-medium">
-            Software projects engineered by Sivasri R utilizing Java/JSP, MySQL, Servlets, HTML/CSS/JavaScript, and Power BI.
+            Software applications engineered by Sivasri R utilizing MERN Stack (MongoDB, Express, React, Node.js), Java/JSP, MySQL, Servlets, and Modern Web interfaces.
           </p>
         </div>
 
+        {/* Note banner clarifying Internship segregation */}
+        <div className="mb-10 p-4 rounded-2xl bg-emerald-50/90 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-800/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs sm:text-sm">
+          <div className="flex items-center gap-2 text-slate-800 dark:text-slate-200 font-medium">
+            <Briefcase className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+            <span>Looking for IoT Sensors and Data Analytics? They are documented under the <strong>Internships & Experience</strong> section!</span>
+          </div>
+          {onNavigate && (
+            <button
+              onClick={() => onNavigate('experience')}
+              className="font-black text-emerald-700 dark:text-emerald-300 hover:underline inline-flex items-center gap-1 cursor-pointer shrink-0"
+            >
+              <span>View Internships</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          )}
+        </div>
+
         {/* Category Filter Tabs */}
-        <div className="flex flex-wrap items-center justify-center gap-2.5 mb-12">
+        <div className="flex flex-wrap items-center justify-center gap-2.5 mb-10">
           {categories.map((cat) => (
             <button
               key={cat}
@@ -56,13 +76,13 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                   : 'bg-white/90 dark:bg-slate-800/90 text-slate-700 dark:text-slate-200 hover:bg-emerald-100 dark:hover:bg-slate-700 border-2 border-emerald-200 dark:border-slate-700'
               }`}
             >
-              {cat === 'All' ? 'All Projects' : `${cat} Projects`}
+              {cat === 'All' ? 'All Development Projects' : `${cat} Projects`}
             </button>
           ))}
         </div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
           {filteredProjects.map((project) => (
             <div
               key={project.id}
@@ -133,7 +153,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                   onClick={() => onSelectProject(project)}
                   className="flex-1 inline-flex items-center justify-center gap-1.5 px-5 py-3 text-xs sm:text-sm font-black text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl shadow-md transition-all cursor-pointer active:scale-95"
                 >
-                  <span>Project Overview & Architecture</span>
+                  <span>Project Details & Architecture</span>
                   <ChevronRight className="w-4 h-4" />
                 </button>
 
@@ -162,6 +182,27 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
             </div>
           ))}
         </div>
+
+        {/* Bottom CTA */}
+        {onNavigate && (
+          <div className="flex flex-wrap items-center justify-between gap-4 p-6 rounded-3xl bg-emerald-100/80 dark:bg-emerald-950/80 border-2 border-emerald-300 dark:border-emerald-800">
+            <div>
+              <h3 className="text-base font-black text-slate-900 dark:text-white">
+                Discover internship experience & qualifications
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 font-medium">
+                View the IoT Sensor and Data Analytics internships, MCA & BCA degrees, and certifications.
+              </p>
+            </div>
+            <button
+              onClick={() => onNavigate('experience')}
+              className="inline-flex items-center gap-2 px-6 py-3 text-xs sm:text-sm font-black text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl shadow-md cursor-pointer transition-all active:scale-95"
+            >
+              <span>View Experience & Internships</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        )}
 
       </div>
     </section>

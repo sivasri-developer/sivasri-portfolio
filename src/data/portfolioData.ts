@@ -3,16 +3,18 @@ import { Project, Skill, ExperienceItem, Certification } from '../types';
 export const PERSONAL_INFO = {
   name: 'SIVASRI R',
   title: 'Software Developer',
-  subtitle: 'MCA Student • Java, SQL, Spring Boot & Web Developer',
+  subtitle: 'MCA Student • MERN Stack, Java, SQL, Spring Boot & Web Developer',
   badge: 'MCA Student • Software Developer',
   phone: '+91 7395821575',
   email: 'sri934888@gmail.com',
-  bio: 'MCA student with strong skills in Java, SQL, Spring Boot, and Web Development. Experienced in building Java/JSP-based applications and database-driven solutions. Passionate about software engineering, problem solving, and developing scalable applications.',
-  fullBio: `I am an MCA student at Holy Cross College (Autonomous) with strong expertise in Java, SQL, Spring Boot, and Web Development. I hold a Bachelor of Computer Applications (BCA) with an 8.67 CGPA from J.J College of Arts and Science. 
+  bio: 'MCA student with strong skills in MERN Stack, Java, SQL, Spring Boot, and Web Development. Experienced in building responsive full-stack applications, Java/JSP-based systems, and database-driven solutions. Passionate about software engineering, problem solving, and developing scalable applications.',
+  fullBio: `I am an MCA student at Holy Cross College (Autonomous) with strong expertise in MERN Stack, Java, SQL, Spring Boot, and Web Development. I hold a Bachelor of Computer Applications (BCA) with an 8.67 CGPA from J.J College of Arts and Science. 
 
-I have hands-on experience building web applications such as the Online Garment Shop Management System using Java/JSP and MySQL, as well as centralized platforms like RS App Hub. Beyond software development, I am a District Gold Medalist in Taekwondo, state-level participant, and 2nd prize winner in inter-college Semantic Memory competitions.`,
+I have hands-on experience building full-stack web applications like smileSteps (MERN stack child-friendly activity platform), Online Garment Shop Management System (Java/JSP & MySQL), and RS App Hub. Beyond software development, I am a District Gold Medalist in Taekwondo, state-level participant, and 2nd prize winner in inter-college Semantic Memory competitions.`,
   location: 'Tamil Nadu, India',
   availability: 'Available for Full-time Software Engineering Roles & Internships',
+  photoUrl: '/sivasri_photo.png',
+  photoFallback: 'https://github.com/sivasri-developer.png',
   github: 'https://github.com/sivasri-developer',
   linkedin: 'https://linkedin.com/in/sivasri-ravi-369000299',
   twitter: 'https://twitter.com/sivasri_dev',
@@ -45,7 +47,49 @@ I have hands-on experience building web applications such as the Online Garment 
 };
 
 export const SKILLS: Skill[] = [
-  // Programming
+  // Full Stack & Modern Web
+  {
+    name: 'MERN Stack',
+    category: 'Full Stack',
+    proficiency: 90,
+    level: 'Advanced',
+    icon: 'Layers',
+    years: '2+ Years',
+    color: 'emerald',
+    description: 'MongoDB, Express.js, React, Node.js full-stack development, REST APIs, state management, and NoSQL architecture.',
+  },
+  {
+    name: 'React.js',
+    category: 'Frontend',
+    proficiency: 88,
+    level: 'Proficient',
+    icon: 'FileCode2',
+    years: '2+ Years',
+    color: 'sky',
+    description: 'Component lifecycle, hooks, state management, interactive UI design, accessible layouts, and SPA performance.',
+  },
+  {
+    name: 'Node.js & Express.js',
+    category: 'Backend',
+    proficiency: 86,
+    level: 'Proficient',
+    icon: 'Server',
+    years: '2+ Years',
+    color: 'emerald',
+    description: 'Server-side JavaScript runtime, RESTful routing, middleware pipelines, authentication, and async workflows.',
+  },
+  {
+    name: 'MongoDB',
+    category: 'Databases',
+    proficiency: 85,
+    level: 'Proficient',
+    icon: 'Database',
+    years: '2+ Years',
+    color: 'teal',
+    description: 'NoSQL document schema design, Mongoose ODM, CRUD operations, indexing, and MongoDB Atlas deployment.',
+  },
+
+  // Programming & Java Backend
   {
     name: 'Java & Advanced Java',
     category: 'Languages',
@@ -116,17 +160,17 @@ export const SKILLS: Skill[] = [
     icon: 'Cpu',
     years: '3+ Years',
     color: 'slate',
-    description: 'Integrated Development Environments for Java enterprise projects, debugging, and web code.',
+    description: 'Integrated Development Environments for Java enterprise projects, MERN full-stack debugging, and web code.',
   },
   {
     name: 'Power BI',
     category: 'Tools & Platforms',
-    proficiency: 82,
+    proficiency: 84,
     level: 'Proficient',
     icon: 'BarChart3',
     years: '1+ Year',
     color: 'amber',
-    description: 'Data analytics visualization, interactive dashboard creation, and dataset modeling.',
+    description: 'Data analytics visualization, interactive business dashboard creation, and dataset modeling.',
   },
   {
     name: 'Git & GitHub',
@@ -150,12 +194,33 @@ export const SKILLS: Skill[] = [
   },
 ];
 
+// Software Projects Only (IoT & Data Analytics are classified under Internships per instruction)
 export const PROJECTS: Project[] = [
+  {
+    id: 'smile-steps',
+    title: 'smileSteps - Child-friendly Learning & Activity Platform',
+    category: 'MERN',
+    shortDescription: 'Child-friendly learning & activity platform. Develop a MERN-stack web application designed to support blossom children through visual guidance, voice assistance, mood tracking, step-by-step activities, and positive rewards.',
+    fullDescription: 'Child-friendly learning & activity platform .\nDevelop a MERN-stack web application designed to support blossom children through visual guidance ,voice assistance, mood tracking,step-by-step activities,and positive rewards. The platform uses an accessible,sensor-friendly  interface with interactive stars,stickers,flower growth,and celebration features to encourage every small achievement.',
+    image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=1200&auto=format&fit=crop',
+    tags: ['MERN Stack', 'MongoDB', 'Express.js', 'React', 'Node.js', 'Voice Assistance', 'Mood Tracking', 'Accessible UI', 'Positive Rewards'],
+    features: [
+      'Accessible, sensory-friendly interface with calming visuals & animations',
+      'Step-by-step learning activities with visual guidance & voice assistance',
+      'Daily mood tracking for blossom children to express emotions comfortably',
+      'Positive reward system with interactive stars, stickers, flower growth & celebration triggers',
+      'Full MERN-stack backend with MongoDB schemas for child progress & activity milestones',
+    ],
+    githubUrl: 'https://github.com/sivasri-developer/smileSteps',
+    architectureNotes: 'Engineered as a MERN-stack web application (MongoDB, Express.js, React, Node.js). Integrates sensory-conscious React UI components, Web Speech API voice synthesis, mood telemetry storage in MongoDB, and dynamic milestone celebrations.',
+    stars: 32,
+    highlighted: true,
+  },
   {
     id: 'garment-shop-mgmt',
     title: 'Online Garment Shop Management System',
     category: 'Java',
-    shortDescription: 'Comprehensive Java/JSP enterprise web application for inventory, employee records, sales tracking, and administrative management using MySQL.',
+    shortDescription: 'Comprehensive Java/JSP enterprise web application for garment inventory, employee records, sales tracking, and administrative billing using MySQL.',
     fullDescription: 'The Online Garment Shop Management System is a robust web application built with Java, Servlets/JSP, and MySQL. It empowers store owners and managers to streamline stock movement, track daily garment sales, oversee employee shifts, and manage supplier invoices securely.',
     image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1200&auto=format&fit=crop',
     tags: ['Java', 'JSP', 'Servlets', 'MySQL', 'HTML5', 'CSS3', 'JavaScript'],
@@ -192,44 +257,40 @@ export const PROJECTS: Project[] = [
     stars: 25,
     highlighted: true,
   },
-  {
-    id: 'iot-sensor-dashboard',
-    title: 'IoT Sensor Data Analytics Dashboard',
-    category: 'Full Stack',
-    shortDescription: 'Real-time telemetry and data analytics dashboard monitoring environmental IoT sensors, built during the HCC IIC Internship.',
-    fullDescription: 'Developed during the IoT Sensor Internship at HCC IIC. The application collects live temperature, humidity, and motion sensor readings, displaying data trends on dynamic chart visualizers and triggering threshold alerts.',
-    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop',
-    tags: ['Java', 'IoT Sensors', 'SQL', 'Data Analytics', 'HTML/CSS'],
-    features: [
-      'Real-time chart visualization for temperature and humidity streams',
-      'Configurable alert thresholds with visual status badges',
-      'Historical sensor query logging stored in MySQL',
-      'Export sensor datasets to CSV for Power BI analytics',
-    ],
-    githubUrl: 'https://github.com/sivasri-developer/iot-sensor-analytics',
-    stars: 19,
-    highlighted: false,
-  },
-  {
-    id: 'data-analytics-suite',
-    title: 'Enterprise Data Analytics & Power BI Insights',
-    category: 'Full Stack',
-    shortDescription: 'Business intelligence analytics project built during the T4TEQ internship, generating executive charts and SQL reports.',
-    fullDescription: 'Created as part of the Data Analytics Internship at T4TEQ. Transforms raw relational database dumps into interactive Power BI dashboards, identifying operational bottlenecks and quarterly revenue performance trends.',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop',
-    tags: ['Power BI', 'SQL', 'Python', 'Data Analytics'],
-    features: [
-      'Interactive Power BI dashboard reports with drill-down metrics',
-      'Automated SQL queries for data aggregation and cleaning',
-      'Python data preprocessing scripts using pandas and matplotlib',
-    ],
-    githubUrl: 'https://github.com/sivasri-developer/data-analytics-t4teq',
-    stars: 14,
-    highlighted: false,
-  },
 ];
 
+// Timeline with prominent Internships & Education
 export const TIMELINE: ExperienceItem[] = [
+  {
+    id: 'iot-internship',
+    role: 'IoT Sensor Intern',
+    organization: 'HCC IIC (Holy Cross College)',
+    type: 'Internship',
+    period: '2025',
+    location: 'Holy Cross College, Tamil Nadu',
+    description: [
+      'Gained hands-on experience interfacing environmental IoT sensors (temperature, humidity, motion) with software monitoring controllers.',
+      'Logged live telemetry streams into relational MySQL databases for real-time sensor analytics dashboards.',
+      'Configured alert threshold triggers and automated status warning signals.',
+    ],
+    skillsUsed: ['IoT Sensors', 'Java', 'SQL', 'Data Logging', 'Telemetry'],
+    achievementBadge: 'IoT Sensor Internship Certificate',
+  },
+  {
+    id: 'data-analytics-internship',
+    role: 'Data Analytics Intern',
+    organization: 'T4TEQ',
+    type: 'Internship',
+    period: '2026',
+    location: 'Tamil Nadu, India',
+    description: [
+      'Performed statistical analysis, data cleaning, and database querying using SQL and Python.',
+      'Designed interactive business reports and visual executive dashboards using Power BI.',
+      'Transformed relational datasets into actionable operational bottleneck analysis and revenue trend metrics.',
+    ],
+    skillsUsed: ['Power BI', 'SQL', 'Python', 'Data Analytics', 'Excel'],
+    achievementBadge: 'Data Analytics Internship Certificate',
+  },
   {
     id: 'mca-degree',
     role: 'Master of Computer Applications (MCA)',
@@ -239,7 +300,7 @@ export const TIMELINE: ExperienceItem[] = [
     location: 'Tamil Nadu, India',
     description: [
       'Pursuing MCA with a focus on Advanced Java, Spring Boot, Database Management Systems, and Software Engineering.',
-      'Achieved a strong academic CGPA of 8.00.',
+      'Achieved a strong academic CGPA of 8.00 / 10.',
       'Actively developing full-stack web applications and participating in technical symposiums.',
     ],
     skillsUsed: ['Java', 'Spring Boot', 'SQL', 'Web Development', 'OOP', 'Software Engineering'],
@@ -253,40 +314,12 @@ export const TIMELINE: ExperienceItem[] = [
     period: '2022 - 2025',
     location: 'Tamil Nadu, India',
     description: [
-      'Graduated with an outstanding academic record of 8.67 CGPA.',
+      'Graduated with an outstanding academic record of 8.67 / 10 CGPA.',
       'Mastered fundamentals of programming in C++, Java, Python, Web Development, and MySQL.',
       'Won 2nd Prize in Inter-College Semantic Memory competition.',
     ],
     skillsUsed: ['Java', 'C++', 'Python', 'SQL/MySQL', 'HTML/CSS/JS', 'DBMS'],
     achievementBadge: 'CGPA: 8.67 / 10',
-  },
-  {
-    id: 'data-analytics-internship',
-    role: 'Data Analytics Intern',
-    organization: 'T4TEQ',
-    type: 'Internship',
-    period: '2026',
-    location: 'Tamil Nadu, India',
-    description: [
-      'Performed statistical analysis, data cleaning, and database querying using SQL and Python.',
-      'Created interactive business reports and visual dashboards using Power BI.',
-    ],
-    skillsUsed: ['Power BI', 'SQL', 'Python', 'Data Analytics', 'Excel'],
-    achievementBadge: 'Data Analytics Certificate',
-  },
-  {
-    id: 'iot-internship',
-    role: 'IoT Sensor Intern',
-    organization: 'HCC IIC',
-    type: 'Internship',
-    period: '2025',
-    location: 'Holy Cross College',
-    description: [
-      'Gained hands-on experience interfacing IoT sensors with software monitoring controllers.',
-      'Logged telemetry data into relational SQL databases for live dashboard reporting.',
-    ],
-    skillsUsed: ['IoT Sensors', 'Java', 'SQL', 'Data Logging'],
-    achievementBadge: 'IoT Certification',
   },
 ];
 
@@ -318,10 +351,9 @@ export const CERTIFICATIONS: Certification[] = [
   {
     id: 'cert-hindi',
     title: 'Six Hindi Certification Examinations',
-    issuer: 'Official Language Sabha',
-    date: 'Completed',
+    issuer: 'DBHP Sabha / Official Language Body',
+    date: 'Completed 6 Exams',
     skills: ['Hindi Proficiency', 'Multilingual Communication'],
     badgeColor: 'purple',
   },
 ];
-

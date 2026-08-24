@@ -16,7 +16,7 @@ export interface Project {
 
 export interface Skill {
   name: string;
-  category: 'Languages' | 'Frontend' | 'Backend' | 'Databases' | 'Tools & Platforms';
+  category: 'Languages' | 'Frontend' | 'Backend' | 'Databases' | 'Full Stack' | 'Tools & Platforms';
   proficiency: number; // 0-100
   level: 'Advanced' | 'Proficient' | 'Intermediate';
   icon: string; // Lucide icon name or SVG representation
@@ -50,7 +50,17 @@ export interface Certification {
 export interface ContactFormData {
   name: string;
   email: string;
+  phone?: string;
+  company?: string;
   subject: string;
   message: string;
   type: 'General Inquiry' | 'Job Opportunity' | 'Project Collaboration' | 'Mentorship';
+}
+
+export interface ContactInquiry extends ContactFormData {
+  id: string;
+  timestamp: string;
+  status: 'New' | 'Viewed' | 'Responded' | 'Archived';
+  emailDeliveryStatus?: 'sent' | 'simulated' | 'failed';
+  confirmationSent?: boolean;
 }

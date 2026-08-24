@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { PERSONAL_INFO, SKILLS, PROJECTS, TIMELINE, CERTIFICATIONS } from '../data/portfolioData';
+import { useProfilePhoto } from '../services/photoManager';
 import {
   X,
   Printer,
@@ -23,6 +24,7 @@ interface ResumeModalProps {
 
 export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => {
   const [copied, setCopied] = useState(false);
+  const currentPhoto = useProfilePhoto();
 
   if (!isOpen) return null;
 
@@ -44,16 +46,19 @@ EDUCATION
 - Bachelor of Computer Applications (BCA) | J.J College of Arts and Science (Autonomous) | 2022 - 2025 | CGPA: 8.67 / 10
 
 TECHNICAL SKILLS
-- Programming & Web: Java, Advanced Java, Spring Boot, SQL, MySQL, Oracle, HTML5, CSS3, JavaScript, PHP, Python
+- Full Stack & Web: MERN Stack (MongoDB, Express.js, React, Node.js), Java, Advanced Java, Spring Boot, SQL, MySQL, Oracle, HTML5, CSS3, JavaScript, PHP, Python
 - Tools & Platforms: VS Code, Apache NetBeans, Power BI, Linux, Git & GitHub, MS Office
 
 KEY PROJECTS
-1. Online Garment Shop Management System (Java, JSP, Servlets, MySQL)
+1. smileSteps (MERN Stack, MongoDB, Express.js, React, Node.js)
+   - Child-friendly learning & activity platform with visual guidance, voice assistance, mood tracking, and positive reward milestones.
+   - GitHub: https://github.com/sivasri-developer/smileSteps
+2. Online Garment Shop Management System (Java, JSP, Servlets, MySQL)
    - Comprehensive web app for inventory, employee shift records, sales logging, and supplier billing.
-2. RS App Hub (HTML5, CSS3, JavaScript)
+   - GitHub: https://github.com/sivasri-developer/garment-shop-management
+3. RS App Hub (HTML5, CSS3, JavaScript)
    - Centralized application portal with live DOM search, multi-filter navigation, and responsive themes.
-3. IoT Sensor Data Analytics Dashboard (Java, SQL, IoT Sensors)
-   - Real-time telemetry monitoring for environmental sensor feeds built during HCC IIC Internship.
+   - GitHub: https://github.com/sivasri-developer/rs-app-hub
 
 INTERNSHIPS & CERTIFICATIONS
 - Data Analytics Intern @ T4TEQ (2026) - Power BI, SQL, Python
@@ -117,28 +122,42 @@ DISTINCTIONS & HONORS
         <div className="p-6 sm:p-10 space-y-8 text-slate-800 dark:text-slate-200 font-sans leading-relaxed">
           
           {/* Resume Name Header */}
-          <div className="text-center pb-6 border-b-2 border-emerald-200 dark:border-emerald-800">
-            <h1 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight mb-1">
-              {PERSONAL_INFO.name}
-            </h1>
-            <p className="text-sm font-black text-emerald-700 dark:text-emerald-300 uppercase tracking-wider mb-3">
-              Software Developer • MCA Student • Java, SQL & Web Specialist
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-4 text-xs font-extrabold text-slate-700 dark:text-slate-300">
-              <span className="flex items-center gap-1">
-                <Phone className="w-3.5 h-3.5 text-emerald-600" />
-                {PERSONAL_INFO.phone}
-              </span>
-              <span>•</span>
-              <span className="flex items-center gap-1">
-                <Mail className="w-3.5 h-3.5 text-emerald-600" />
-                {PERSONAL_INFO.email}
-              </span>
-              <span>•</span>
-              <span className="flex items-center gap-1">
-                <MapPin className="w-3.5 h-3.5 text-emerald-600" />
-                {PERSONAL_INFO.location}
-              </span>
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 pb-6 border-b-2 border-emerald-200 dark:border-emerald-800">
+            <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border-2 border-emerald-400 dark:border-emerald-500 shadow-md shrink-0 bg-slate-900">
+              <img
+                src={currentPhoto}
+                alt="Sivasri R"
+                className="w-full h-full object-cover object-top"
+                referrerPolicy="no-referrer"
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).src = PERSONAL_INFO.photoFallback || 'https://github.com/sivasri-developer.png';
+                }}
+              />
+            </div>
+
+            <div className="text-center sm:text-left flex-1">
+              <h1 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight mb-1">
+                {PERSONAL_INFO.name}
+              </h1>
+              <p className="text-sm font-black text-emerald-700 dark:text-emerald-300 uppercase tracking-wider mb-3">
+                Software Developer • MCA Student • MERN Stack, Java, SQL & Web Specialist
+              </p>
+              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 text-xs font-extrabold text-slate-700 dark:text-slate-300">
+                <span className="flex items-center gap-1">
+                  <Phone className="w-3.5 h-3.5 text-emerald-600" />
+                  {PERSONAL_INFO.phone}
+                </span>
+                <span>•</span>
+                <span className="flex items-center gap-1">
+                  <Mail className="w-3.5 h-3.5 text-emerald-600" />
+                  {PERSONAL_INFO.email}
+                </span>
+                <span>•</span>
+                <span className="flex items-center gap-1">
+                  <MapPin className="w-3.5 h-3.5 text-emerald-600" />
+                  {PERSONAL_INFO.location}
+                </span>
+              </div>
             </div>
           </div>
 
@@ -181,16 +200,16 @@ DISTINCTIONS & HONORS
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
               <div className="p-3.5 bg-emerald-100/70 dark:bg-slate-800/80 rounded-xl border border-emerald-200 dark:border-slate-700">
+                <strong className="block text-slate-900 dark:text-white mb-1 font-black">Full Stack & Web Architecture:</strong>
+                <span className="text-slate-700 dark:text-slate-200 font-medium">MERN Stack (MongoDB, Express.js, React, Node.js), HTML5, CSS3, JavaScript ES6+, Responsive Design</span>
+              </div>
+              <div className="p-3.5 bg-emerald-100/70 dark:bg-slate-800/80 rounded-xl border border-emerald-200 dark:border-slate-700">
                 <strong className="block text-slate-900 dark:text-white mb-1 font-black">Programming & Backend:</strong>
                 <span className="text-slate-700 dark:text-slate-200 font-medium">Java, Advanced Java, Spring Boot, PHP, Python, Servlets, JSP</span>
               </div>
               <div className="p-3.5 bg-emerald-100/70 dark:bg-slate-800/80 rounded-xl border border-emerald-200 dark:border-slate-700">
                 <strong className="block text-slate-900 dark:text-white mb-1 font-black">Databases & Querying:</strong>
-                <span className="text-slate-700 dark:text-slate-200 font-medium">SQL, MySQL, Oracle, Relational Database Modeling</span>
-              </div>
-              <div className="p-3.5 bg-emerald-100/70 dark:bg-slate-800/80 rounded-xl border border-emerald-200 dark:border-slate-700">
-                <strong className="block text-slate-900 dark:text-white mb-1 font-black">Web Development:</strong>
-                <span className="text-slate-700 dark:text-slate-200 font-medium">HTML5, CSS3, JavaScript ES6+, DOM Manipulation, Responsive Web Layouts</span>
+                <span className="text-slate-700 dark:text-slate-200 font-medium">MongoDB NoSQL, SQL, MySQL, Oracle, Relational Modeling</span>
               </div>
               <div className="p-3.5 bg-emerald-100/70 dark:bg-slate-800/80 rounded-xl border border-emerald-200 dark:border-slate-700">
                 <strong className="block text-slate-900 dark:text-white mb-1 font-black">Development Tools & Analytics:</strong>

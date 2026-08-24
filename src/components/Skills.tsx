@@ -2,24 +2,33 @@ import React, { useState } from 'react';
 import { SKILLS } from '../data/portfolioData';
 import { Skill } from '../types';
 import {
-  Code2,
-  Database,
   Cpu,
-  Layers,
   Search,
   CheckCircle,
-  Terminal,
-  Grid,
-  List,
   Sparkles,
+  ArrowRight,
+  Code2,
+  Database,
+  Layers,
+  Terminal,
+  ShieldCheck,
+  Server,
+  FileCode2,
+  BarChart3,
+  GitBranch,
+  HardDrive,
 } from 'lucide-react';
 
-export const Skills: React.FC = () => {
+interface SkillsProps {
+  onNavigate?: (page: string) => void;
+}
+
+export const Skills: React.FC<SkillsProps> = ({ onNavigate }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [activeSkillModal, setActiveSkillModal] = useState<Skill | null>(null);
 
-  const categories = ['All', 'Languages', 'Frontend', 'Backend', 'Databases', 'Tools & Platforms'];
+  const categories = ['All', 'Full Stack', 'Languages', 'Frontend', 'Backend', 'Databases', 'Tools & Platforms'];
 
   const filteredSkills = SKILLS.filter((skill) => {
     const matchesCategory = selectedCategory === 'All' || skill.category === selectedCategory;
@@ -42,21 +51,48 @@ export const Skills: React.FC = () => {
     }
   };
 
+  const renderIcon = (iconName: string) => {
+    switch (iconName) {
+      case 'Layers':
+        return <Layers className="w-5 h-5" />;
+      case 'Code2':
+        return <Code2 className="w-5 h-5" />;
+      case 'ShieldCheck':
+        return <ShieldCheck className="w-5 h-5" />;
+      case 'Database':
+        return <Database className="w-5 h-5" />;
+      case 'FileCode2':
+        return <FileCode2 className="w-5 h-5" />;
+      case 'Terminal':
+        return <Terminal className="w-5 h-5" />;
+      case 'Server':
+        return <Server className="w-5 h-5" />;
+      case 'BarChart3':
+        return <BarChart3 className="w-5 h-5" />;
+      case 'GitBranch':
+        return <GitBranch className="w-5 h-5" />;
+      case 'HardDrive':
+        return <HardDrive className="w-5 h-5" />;
+      default:
+        return <Cpu className="w-5 h-5" />;
+    }
+  };
+
   return (
-    <section id="skills" className="py-20 relative z-10">
+    <section id="skills" className="py-12 sm:py-16 relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Header */}
+        {/* Page Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bright-highlight-badge text-xs uppercase tracking-wider mb-3">
             <Cpu className="w-4 h-4 text-emerald-600 dark:text-emerald-300" />
-            <span>Technical Capabilities</span>
+            <span>Technical Capabilities & Stack</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
-            Programming Languages, Frameworks & Tools
-          </h2>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
+            Skills & Core Technologies
+          </h1>
           <p className="mt-3 text-base sm:text-lg text-slate-700 dark:text-slate-200 font-medium">
-            Core tech stack proficiency developed across academic coursework, projects, and internships.
+            Proficiencies across MERN Stack (MongoDB, Express, React, Node.js), Java enterprise systems, relational SQL databases, modern web interfaces, and data analytics tools.
           </p>
         </div>
 
@@ -93,7 +129,7 @@ export const Skills: React.FC = () => {
         </div>
 
         {/* Skills Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {filteredSkills.map((skill) => (
             <div
               key={skill.name}
@@ -115,18 +151,23 @@ export const Skills: React.FC = () => {
                   </span>
                 </div>
 
-                {/* Skill Name & Experience */}
+                {/* Skill Name & Icon */}
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-lg font-black text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-300 transition-colors">
-                    {skill.name}
-                  </h3>
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center border border-emerald-300 dark:border-emerald-800 shrink-0">
+                      {renderIcon(skill.icon)}
+                    </div>
+                    <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-300 transition-colors">
+                      {skill.name}
+                    </h3>
+                  </div>
                   <span className="text-xs font-extrabold text-slate-700 dark:text-slate-300 font-mono bg-emerald-100 dark:bg-emerald-950 px-2 py-0.5 rounded-md border border-emerald-300 dark:border-emerald-800">
                     {skill.years}
                   </span>
                 </div>
 
                 {/* Description */}
-                <p className="text-xs text-slate-700 dark:text-slate-300 font-medium leading-relaxed mb-6 line-clamp-2">
+                <p className="text-xs text-slate-700 dark:text-slate-300 font-medium leading-relaxed mb-6">
                   {skill.description}
                 </p>
               </div>
@@ -151,8 +192,29 @@ export const Skills: React.FC = () => {
         </div>
 
         {filteredSkills.length === 0 && (
-          <div className="text-center py-16 text-slate-600 dark:text-slate-300 font-semibold">
-            No matching skills found for "{searchQuery}". Try a different term or category.
+          <div className="text-center py-16 text-slate-600 dark:text-slate-300 font-semibold glass-card rounded-3xl p-8 max-w-md mx-auto mb-12">
+            No matching skills found for "{searchQuery}". Try searching for Java, SQL, Python, or Spring Boot.
+          </div>
+        )}
+
+        {/* Bottom Navigation CTA */}
+        {onNavigate && (
+          <div className="flex flex-wrap items-center justify-between gap-4 p-6 rounded-3xl bg-emerald-100/80 dark:bg-emerald-950/80 border-2 border-emerald-300 dark:border-emerald-800">
+            <div>
+              <h3 className="text-base font-black text-slate-900 dark:text-white">
+                See these skills in action
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 font-medium">
+                Explore the Software Development Projects built with Java, JSP, and MySQL.
+              </p>
+            </div>
+            <button
+              onClick={() => onNavigate('projects')}
+              className="inline-flex items-center gap-2 px-6 py-3 text-xs sm:text-sm font-black text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl shadow-md cursor-pointer transition-all active:scale-95"
+            >
+              <span>Explore Projects</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
           </div>
         )}
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TIMELINE, CERTIFICATIONS } from '../data/portfolioData';
 import {
   GraduationCap,
@@ -9,55 +9,118 @@ import {
   MapPin,
   ShieldCheck,
   Trophy,
+  ArrowRight,
+  Sparkles,
+  Layers,
 } from 'lucide-react';
 
-export const Experience: React.FC = () => {
+interface ExperienceProps {
+  onNavigate?: (page: string) => void;
+}
+
+export const Experience: React.FC<ExperienceProps> = ({ onNavigate }) => {
+  const [activeFilter, setActiveFilter] = useState<'All' | 'Internship' | 'Education'>('All');
+
+  const internships = TIMELINE.filter((item) => item.type === 'Internship');
+  const education = TIMELINE.filter((item) => item.type === 'Education');
+
+  const displayTimeline = TIMELINE.filter((item) => {
+    if (activeFilter === 'All') return true;
+    return item.type === activeFilter;
+  });
+
   return (
-    <section id="experience" className="py-20 relative z-10">
+    <section id="experience" className="py-12 sm:py-16 relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        {/* Page Header */}
+        <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bright-highlight-badge text-xs uppercase tracking-wider mb-3">
-            <GraduationCap className="w-4 h-4 text-emerald-600 dark:text-emerald-300" />
-            <span>Academic & Career Journey</span>
+            <Briefcase className="w-4 h-4 text-emerald-600 dark:text-emerald-300" />
+            <span>Internships, Education & Certifications</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
-            Education, Internships & Certifications
-          </h2>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
+            Experience & Credentials
+          </h1>
           <p className="mt-3 text-base sm:text-lg text-slate-700 dark:text-slate-200 font-medium">
-            Sivasri R's academic qualifications in Computer Applications, industry internships, and verified credentials.
+            Industry internships in IoT Sensors and Data Analytics, academic qualifications in Computer Applications, and verified credentials.
           </p>
         </div>
 
+        {/* Filter Selection Tabs */}
+        <div className="flex flex-wrap items-center justify-center gap-3 mb-10">
+          <button
+            onClick={() => setActiveFilter('All')}
+            className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-black transition-all cursor-pointer ${
+              activeFilter === 'All'
+                ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white dark:from-emerald-500 dark:to-teal-500 shadow-lg scale-105 border-2 border-emerald-400'
+                : 'bg-white/90 dark:bg-slate-800/90 text-slate-700 dark:text-slate-200 hover:bg-emerald-100 dark:hover:bg-slate-700 border-2 border-emerald-200 dark:border-slate-700'
+            }`}
+          >
+            All Timeline ({TIMELINE.length})
+          </button>
+
+          <button
+            onClick={() => setActiveFilter('Internship')}
+            className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-black transition-all cursor-pointer ${
+              activeFilter === 'Internship'
+                ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white dark:from-emerald-500 dark:to-teal-500 shadow-lg scale-105 border-2 border-emerald-400'
+                : 'bg-white/90 dark:bg-slate-800/90 text-slate-700 dark:text-slate-200 hover:bg-emerald-100 dark:hover:bg-slate-700 border-2 border-emerald-200 dark:border-slate-700'
+            }`}
+          >
+            💼 Internships Only ({internships.length})
+          </button>
+
+          <button
+            onClick={() => setActiveFilter('Education')}
+            className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-black transition-all cursor-pointer ${
+              activeFilter === 'Education'
+                ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white dark:from-emerald-500 dark:to-teal-500 shadow-lg scale-105 border-2 border-emerald-400'
+                : 'bg-white/90 dark:bg-slate-800/90 text-slate-700 dark:text-slate-200 hover:bg-emerald-100 dark:hover:bg-slate-700 border-2 border-emerald-200 dark:border-slate-700'
+            }`}
+          >
+            🎓 Education Only ({education.length})
+          </button>
+        </div>
+
         {/* Dual Column Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start mb-12">
           
           {/* Left Column: Timeline List */}
-          <div className="lg:col-span-7 space-y-8">
-            <h3 className="text-xl font-black text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+          <div className="lg:col-span-7 space-y-6">
+            <h2 className="text-xl font-black text-slate-900 dark:text-white mb-4 flex items-center gap-2">
               <Briefcase className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
-              <span>Education & Internship Experience</span>
-            </h3>
+              <span>
+                {activeFilter === 'Internship'
+                  ? 'Industry Internships'
+                  : activeFilter === 'Education'
+                  ? 'Academic Education'
+                  : 'Internships & Education Journey'}
+              </span>
+            </h2>
 
-            <div className="relative pl-6 sm:pl-8 border-l-4 border-emerald-400 dark:border-emerald-600 space-y-10">
-              {TIMELINE.map((item) => (
+            <div className="relative pl-6 sm:pl-8 border-l-4 border-emerald-400 dark:border-emerald-600 space-y-8">
+              {displayTimeline.map((item) => (
                 <div key={item.id} className="relative group">
                   {/* Node Bullet */}
                   <div className="absolute -left-[33px] sm:-left-[41px] top-1.5 w-6 h-6 rounded-full bg-white dark:bg-slate-900 border-4 border-emerald-600 dark:border-emerald-400 group-hover:scale-125 transition-transform shadow-md" />
 
                   {/* Card Container */}
-                  <div className="glass-card p-6 rounded-2xl border-2 border-emerald-300/80 dark:border-emerald-500/30 hover:border-emerald-500 transition-all">
+                  <div className="glass-card p-6 rounded-3xl border-2 border-emerald-300/80 dark:border-emerald-500/30 hover:border-emerald-500 transition-all hover:shadow-xl">
                     
                     {/* Role & Badge Header */}
                     <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
                       <div>
-                        <span className="text-xs font-black text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">
+                        <span className={`text-xs font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full inline-block mb-1 ${
+                          item.type === 'Internship'
+                            ? 'bg-amber-100 dark:bg-amber-950 text-amber-900 dark:text-amber-300 border border-amber-300 dark:border-amber-800'
+                            : 'bg-emerald-100 dark:bg-emerald-950 text-emerald-900 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800'
+                        }`}>
                           {item.type}
                         </span>
-                        <h4 className="text-lg font-black text-slate-900 dark:text-white">
+                        <h3 className="text-lg font-black text-slate-900 dark:text-white">
                           {item.role}
-                        </h4>
+                        </h3>
                       </div>
 
                       {item.achievementBadge && (
@@ -109,11 +172,11 @@ export const Experience: React.FC = () => {
           </div>
 
           {/* Right Column: Certifications & Honors */}
-          <div className="lg:col-span-5 space-y-8">
-            <h3 className="text-xl font-black text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+          <div className="lg:col-span-5 space-y-6">
+            <h2 className="text-xl font-black text-slate-900 dark:text-white mb-4 flex items-center gap-2">
               <Award className="w-5 h-5 text-amber-500" />
-              <span>Verified Certifications & Honors</span>
-            </h3>
+              <span>Verified Certifications</span>
+            </h2>
 
             <div className="space-y-4">
               {CERTIFICATIONS.map((cert) => (
@@ -126,9 +189,9 @@ export const Experience: React.FC = () => {
                       <ShieldCheck className="w-5 h-5" />
                     </div>
                     <div>
-                      <h4 className="text-base font-black text-slate-900 dark:text-white">
+                      <h3 className="text-base font-black text-slate-900 dark:text-white">
                         {cert.title}
-                      </h4>
+                      </h3>
                       <p className="text-xs font-bold text-slate-600 dark:text-slate-300">
                         {cert.issuer} • {cert.date}
                       </p>
@@ -151,23 +214,45 @@ export const Experience: React.FC = () => {
 
             {/* Extra Distinction Showcase Card */}
             <div className="p-6 rounded-3xl bg-emerald-100/90 dark:bg-emerald-950/90 border-2 border-emerald-400 dark:border-emerald-600 shadow-xl">
-              <h4 className="text-base font-black text-emerald-950 dark:text-emerald-100 mb-2 flex items-center gap-2">
+              <h3 className="text-base font-black text-emerald-950 dark:text-emerald-100 mb-2 flex items-center gap-2">
                 <Trophy className="w-5 h-5 text-amber-500" />
-                <span>Inter-College & Language Honors</span>
-              </h4>
+                <span>Inter-College & Athletic Distinctions</span>
+              </h3>
               <p className="text-xs text-slate-700 dark:text-slate-200 font-medium leading-relaxed mb-4">
                 • <strong>District Gold Medalist in Taekwondo</strong> & State Level Participant.<br />
                 • <strong>2nd Prize Winner</strong> in Inter-College Semantic Memory Competition.<br />
-                • <strong>Completed 6 Hindi Certification Examinations</strong> demonstrating multilingual proficiency.
+                • <strong>Completed 6 Hindi Certification Examinations</strong> demonstrating multilingual capability.
               </p>
-              <div className="text-xs font-black text-emerald-800 dark:text-emerald-300">
-                ✓ Validated & Verified Credentials
+              <div className="text-xs font-black text-emerald-800 dark:text-emerald-300 flex items-center gap-1">
+                <Sparkles className="w-4 h-4 text-emerald-600" />
+                <span>Verified Credentials & Validated Records</span>
               </div>
             </div>
 
           </div>
 
         </div>
+
+        {/* Bottom CTA */}
+        {onNavigate && (
+          <div className="flex flex-wrap items-center justify-between gap-4 p-6 rounded-3xl bg-emerald-100/80 dark:bg-emerald-950/80 border-2 border-emerald-300 dark:border-emerald-800">
+            <div>
+              <h3 className="text-base font-black text-slate-900 dark:text-white">
+                Ready to collaborate or discuss opportunities?
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 font-medium">
+                Reach out to Sivasri R for full-time software engineering roles and projects.
+              </p>
+            </div>
+            <button
+              onClick={() => onNavigate('contact')}
+              className="inline-flex items-center gap-2 px-6 py-3 text-xs sm:text-sm font-black text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl shadow-md cursor-pointer transition-all active:scale-95"
+            >
+              <span>Get In Touch</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        )}
 
       </div>
     </section>
