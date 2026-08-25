@@ -129,6 +129,7 @@ export default function App() {
             <Hero
               onOpenResume={() => setResumeModalOpen(true)}
               onNavigate={(page) => navigateToPage(page)}
+              onShowToast={showToast}
             />
           )}
 

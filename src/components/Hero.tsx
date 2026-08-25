@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import {
   Code2,
   Terminal,
@@ -15,18 +15,70 @@ import {
   ArrowRight,
   ShieldCheck,
   FolderGit2,
+  Camera,
+  Upload,
+  RefreshCw,
+  Trash2,
+  Check,
 } from 'lucide-react';
 import { PERSONAL_INFO, PROJECTS, TIMELINE } from '../data/portfolioData';
-import { useProfilePhoto } from '../services/photoManager';
+import { useProfilePhoto, saveProfilePhoto, resetProfilePhoto } from '../services/photoManager';
 
 interface HeroProps {
   onOpenResume: () => void;
   onNavigate: (page: string) => void;
+  onShowToast?: (msg: string) => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ onOpenResume, onNavigate }) => {
+export const Hero: React.FC<HeroProps> = ({ onOpenResume, onNavigate, onShowToast }) => {
   const internships = TIMELINE.filter((t) => t.type === 'Internship');
   const currentPhoto = useProfilePhoto();
+  const [photoModalOpen, setPhotoModalOpen] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      alert('Please select a valid image file (PNG, JPG, JPEG, WEBP).');
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      alert('Image file is too large. Please select an image under 10MB.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      setPreviewUrl(event.target?.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleApplyPhoto = async () => {
+    if (!previewUrl) return;
+    setUploading(true);
+    try {
+      await saveProfilePhoto(previewUrl);
+      if (onShowToast) onShowToast('Profile photo updated successfully!');
+      setPhotoModalOpen(false);
+      setPreviewUrl(null);
+    } catch (err) {
+      console.error(err);
+      alert('Failed to update profile photo.');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleResetPhoto = () => {
+    resetProfilePhoto();
+    setPreviewUrl(null);
+    if (onShowToast) onShowToast('Profile photo reset to default.');
+    setPhotoModalOpen(false);
+  };
 
   return (
     <div className="relative py-8 sm:py-12 z-10">
@@ -183,6 +235,19 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume, onNavigate }) => {
                       <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
                       <span>Available for Roles</span>
                     </div>
+
+                    {/* Change Photo Hover Overlay Button */}
+                    <button
+                      onClick={() => {
+                        setPreviewUrl(null);
+                        setPhotoModalOpen(true);
+                      }}
+                      className="absolute top-3 left-3 px-3 py-1.5 rounded-full bg-slate-900/90 hover:bg-emerald-600 backdrop-blur-md border border-white/20 hover:border-emerald-400 text-[11px] font-black text-white flex items-center gap-1.5 shadow-xl transition-all cursor-pointer opacity-90 hover:opacity-100 hover:scale-105 active:scale-95"
+                      title="Update Profile Photo (Will save to your GitHub project)"
+                    >
+                      <Camera className="w-3.5 h-3.5 text-emerald-400 group-hover:text-white" />
+                      <span>Change Photo</span>
+                    </button>
                   </div>
 
                   {/* Quick Highlights Underneath Portrait */}
@@ -383,6 +448,125 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume, onNavigate }) => {
           </div>
         </div>
       </section>
+
+      {/* Profile Photo Update Modal */}
+      {photoModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full overflow-hidden border-2 border-emerald-400 dark:border-emerald-600 shadow-2xl animate-fade-in">
+            {/* Header */}
+            <div className="p-5 bg-gradient-to-r from-emerald-700 to-teal-700 text-white flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center">
+                  <Camera className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-black">Change Profile Photo</h3>
+                  <p className="text-xs text-emerald-100">Upload and save your portrait</p>
+                </div>
+              </div>
+              <button
+                onClick={() => {
+                  setPhotoModalOpen(false);
+                  setPreviewUrl(null);
+                }}
+                className="p-2 rounded-xl bg-white/20 hover:bg-white/30 text-white transition-colors cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Content Body */}
+            <div className="p-6 space-y-5">
+              {/* Image Preview / Drop Zone */}
+              <div className="flex flex-col items-center">
+                <div className="relative w-44 h-56 rounded-2xl overflow-hidden bg-slate-950 border-2 border-emerald-400 dark:border-emerald-600 shadow-lg group">
+                  <img
+                    src={previewUrl || currentPhoto}
+                    alt="Preview"
+                    className="w-full h-full object-cover object-top"
+                  />
+                  {previewUrl && (
+                    <div className="absolute top-2 right-2 px-2 py-1 bg-emerald-600 text-white text-[10px] font-black rounded-md shadow-sm">
+                      New Preview
+                    </div>
+                  )}
+                </div>
+
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-2 text-center">
+                  Recommended: High-resolution vertical portrait (JPG/PNG/WEBP)
+                </p>
+              </div>
+
+              {/* Upload Input Control */}
+              <div>
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleFileSelect}
+                  accept="image/png, image/jpeg, image/jpg, image/webp"
+                  className="hidden"
+                />
+
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="w-full py-3.5 px-4 rounded-2xl border-2 border-dashed border-emerald-400 dark:border-emerald-600 bg-emerald-50/60 dark:bg-emerald-950/40 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 text-emerald-800 dark:text-emerald-300 text-sm font-extrabold flex items-center justify-center gap-2 transition-all cursor-pointer"
+                >
+                  <Upload className="w-4 h-4" />
+                  <span>{previewUrl ? 'Choose Different File' : 'Browse & Upload Photo'}</span>
+                </button>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex items-center gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={handleResetPhoto}
+                  className="px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 hover:bg-red-50 dark:hover:bg-red-950/40 text-red-600 dark:text-red-400 text-xs font-black flex items-center gap-1.5 transition-colors cursor-pointer"
+                  title="Reset to original default photo"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  <span>Reset</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setPhotoModalOpen(false);
+                    setPreviewUrl(null);
+                  }}
+                  className="flex-1 py-3 px-4 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-black hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+                >
+                  Cancel
+                </button>
+
+                <button
+                  type="button"
+                  disabled={!previewUrl || uploading}
+                  onClick={handleApplyPhoto}
+                  className="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-xs font-black flex items-center justify-center gap-1.5 transition-all cursor-pointer disabled:opacity-50 shadow-md"
+                >
+                  {uploading ? (
+                    <>
+                      <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                      <span>Saving...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Check className="w-3.5 h-3.5" />
+                      <span>Save Photo</span>
+                    </>
+                  )}
+                </button>
+              </div>
+
+              <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-[11px] text-slate-600 dark:text-slate-300 leading-normal">
+                💡 <strong>GitHub Sync:</strong> When you save, the file is automatically written into <code className="font-bold text-emerald-600">/public/sivasri_photo.png</code> and will be committed when you sync or push to GitHub.
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
