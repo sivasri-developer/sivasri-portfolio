@@ -55,7 +55,7 @@ KEY PROJECTS
    - GitHub: https://github.com/sivasri-developer/smileSteps
 2. Online Garment Shop Management System (Java, JSP, Servlets, MySQL)
    - Comprehensive web app for inventory, employee shift records, sales logging, and supplier billing.
-   - GitHub: https://github.com/sivasri-developer/garment-shop-management
+   - GitHub: https://github.com/sivasri-developer/online-garment-shop-management
 3. RS App Hub (HTML5, CSS3, JavaScript)
    - Centralized application portal with live DOM search, multi-filter navigation, and responsive themes.
    - GitHub: https://github.com/sivasri-developer/rs-app-hub

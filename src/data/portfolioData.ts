@@ -231,7 +231,7 @@ export const PROJECTS: Project[] = [
       'Relational MySQL database schema with optimized relational joins',
       'User authentication with session management and password encryption',
     ],
-    githubUrl: 'https://github.com/sivasri-developer/garment-shop-management',
+    githubUrl: 'https://github.com/sivasri-developer/online-garment-shop-management',
     architectureNotes: 'Architected using Model-View-Controller (MVC) with JSP for dynamic rendering, Java Servlets as controller handlers, and DAO classes for MySQL JDBC communication.',
     stars: 18,
     highlighted: true,
